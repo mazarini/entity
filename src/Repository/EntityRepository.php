@@ -33,4 +33,16 @@ abstract class EntityRepository extends ServiceEntityRepository implements Entit
      * getNew.
      */
     abstract public function getNew(): EntityInterface;
+
+    /**
+     * count.
+     *
+     * @param array<string,mixed> $criterias
+     *
+     * @return int
+     */
+    public function count(array $criterias = [])
+    {
+        return parent::count($criterias);
+    }
 }

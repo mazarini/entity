@@ -44,6 +44,15 @@ class Entity implements EntityInterface
         return 0 === $this->getId();
     }
 
+    public function addChild(?EntityInterface $child): static
+    {
+        if (null !== $child) {
+            throw new \LogicException(sprintf('Method "%s" of class "%s" must trait child of class "%s"', __METHOD__, static::class, $child::class));
+        }
+
+        return $this;
+    }
+
     public function getEntityId(): string
     {
         return sprintf('%s-%s', strtolower((new \ReflectionClass($this))->getShortName()), $this->getId());

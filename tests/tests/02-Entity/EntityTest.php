@@ -19,6 +19,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Article;
 use Mazarini\Entity\Entity\Entity;
 use PHPUnit\Framework\TestCase;
 
@@ -49,12 +50,22 @@ class EntityTest extends TestCase
         $this->assertSame($id, $this->entity->getId());
     }
 
-    public function testId(): void
+    public function testEntityId(): void
     {
         $id = 1;
         $this->setId($id);
-        $this->assertFalse($this->entity->isNew());
-        $this->assertSame($id, $this->entity->getId());
+        $this->assertSame('entity-' . $id, $this->entity->getEntityId());
+    }
+
+    public function testAddChild(): void
+    {
+        $this->assertSame($this->entity, $this->entity->addChild(null));
+    }
+
+    public function testAddChildException(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->entity->addChild(new Article());
     }
 
     private function setId(int $id): void

@@ -26,4 +26,6 @@ interface EntityInterface
     public function isNew(): bool;
 
     public function getEntityId(): string;
+
+    public function addChild(?self $parent): static;
 }
