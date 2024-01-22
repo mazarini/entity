@@ -54,7 +54,7 @@ class EntityTest extends TestCase
     {
         $id = 1;
         $this->setId($id);
-        $this->assertSame('entity-' . $id, $this->entity->getEntityId());
+        $this->assertSame('entity-'.$id, $this->entity->getEntityId());
     }
 
     public function testAddChild(): void
