@@ -21,17 +21,14 @@ namespace App\Tests\Entity;
 
 use App\Entity\Article;
 use Mazarini\Entity\Entity\Entity;
-use PHPUnit\Framework\TestCase;
+use Mazarini\Test\Test\ReflectionTestCase;
 
-class EntityTest extends TestCase
+class EntityTest extends ReflectionTestCase
 {
-    private \ReflectionProperty $idProperty;
     private Entity $entity;
 
     protected function setup(): void
     {
-        $reflectionClass = new \ReflectionClass(Entity::class);
-        $this->idProperty = $reflectionClass->getProperty('id');
         $this->entity = new Entity();
     }
 
@@ -39,21 +36,21 @@ class EntityTest extends TestCase
     {
         $this->assertTrue($this->entity->isNew());
         $this->assertSame(0, $this->entity->getId());
-        $this->assertSame('entity-0', $this->entity->getEntityId());
     }
 
     public function testExisting(): void
     {
         $id = 1;
-        $this->setId($id);
+        $this->setProperty($this->entity, 'id', $id);
         $this->assertFalse($this->entity->isNew());
         $this->assertSame($id, $this->entity->getId());
     }
 
     public function testEntityId(): void
     {
+        $this->assertSame('entity-0', $this->entity->getEntityId());
         $id = 1;
-        $this->setId($id);
+        $this->setProperty($this->entity, 'id', $id);
         $this->assertSame('entity-'.$id, $this->entity->getEntityId());
     }
 
@@ -66,10 +63,5 @@ class EntityTest extends TestCase
     {
         $this->expectException(\LogicException::class);
         $this->entity->addChild(new Article());
-    }
-
-    private function setId(int $id): void
-    {
-        $this->idProperty->setValue($this->entity, $id);
     }
 }

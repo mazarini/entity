@@ -21,24 +21,27 @@ namespace App\Tests\Entity;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Mazarini\Entity\Test\DoctrineTrait;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Mazarini\Test\Test\DoctrineTestCase;
 
 /**
  * EntityRepositoryTest.
  */
-class EntityRepositoryTest extends KernelTestCase
+class EntityRepositoryTest extends DoctrineTestCase
 {
-    use DoctrineTrait;
     protected ArticleRepository $articleRepository;
 
     protected function setup(): void
     {
-        $articleRepository = static::getEntityManager()->getRepository(Article::class);
+        $articleRepository = $this->getRepository(Article::class);
         if ($articleRepository instanceof ArticleRepository) {
             $this->articleRepository = $articleRepository;
+            $this->removeEntities($this->articleRepository);
         }
-        $this->removeEntities($this->articleRepository);
+    }
+
+    public function testSetup(): void
+    {
+        $this->assertTrue(isset($this->articleRepository));
     }
 
     public function testGetNew(): void
@@ -49,12 +52,22 @@ class EntityRepositoryTest extends KernelTestCase
 
     public function testCount(): void
     {
-        $this->assertSame(0, $this->countEntities($this->articleRepository));
-        $article = $this->articleRepository->getNew()->setLabel('label article');
-        $this->getEntityManager()->persist($article);
-        $this->getEntityManager()->flush();
-        $this->assertSame(1, $this->countEntities($this->articleRepository));
+        $this->assertCount(0, $this->articleRepository);
+        $this->createEntities($this->articleRepository, 1);
+        $this->assertCount(1, $this->articleRepository);
         $this->removeEntities($this->articleRepository);
-        $this->assertSame(0, $this->countEntities($this->articleRepository));
+        $this->assertCount(0, $this->articleRepository);
+    }
+
+    /**
+     * createEntity.
+     *
+     * @param ArticleRepository $objectRepository
+     *
+     * @return Article
+     */
+    protected function createEntity(\Doctrine\Persistence\ObjectRepository $objectRepository, int $i): object
+    {
+        return $objectRepository->getNew()->setLabel(sprintf('Label %s', $i));
     }
 }

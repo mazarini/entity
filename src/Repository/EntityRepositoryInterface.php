@@ -28,7 +28,7 @@ use Mazarini\Entity\Entity\EntityInterface;
  *
  * @extends ObjectRepository <EntityInterface>
  */
-interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepositoryInterface
+interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepositoryInterface, \Countable
 {
     public function getNew(): EntityInterface;
 
@@ -36,8 +36,6 @@ interface EntityRepositoryInterface extends ObjectRepository, ServiceEntityRepos
      * count.
      *
      * @param array<string,mixed> $criterias
-     *
-     * @return int
      */
-    public function count(array $criterias);
+    public function count(array $criterias = []): int;
 }
