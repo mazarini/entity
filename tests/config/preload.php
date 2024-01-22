@@ -17,10 +17,6 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App;
-
-use Mazarini\Test\KernelTest;
-
-class Kernel extends KernelTest
-{
+if (file_exists(dirname(__DIR__).'/var/cache/prod/App_KernelProdContainer.preload.php')) {
+    require dirname(__DIR__).'/var/cache/prod/App_KernelProdContainer.preload.php';
 }

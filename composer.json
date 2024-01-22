@@ -28,6 +28,7 @@
         "symfony/validator": "^6.3|^7.0"
     },
     "require-dev": {
+        "mazarini/test": "^1.0",
         "phpunit/phpunit": "^9.5",
         "symfony/debug-bundle": "^6.3|^7.0",
         "symfony/dotenv": "^6.3|^7.0",

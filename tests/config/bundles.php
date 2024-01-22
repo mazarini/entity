@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App;
-
-use Mazarini\Test\KernelTest;
-
-class Kernel extends KernelTest
-{
-}
+return [
+    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+];
